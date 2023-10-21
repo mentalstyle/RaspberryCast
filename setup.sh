@@ -1,7 +1,6 @@
 #!/bin/sh
 
-if [ `id -u` -ne 0 ]
-then
+if [ `id -u` -ne 0 ]; then
   echo "Please run this script with root privileges!"
   echo "Try again with sudo."
   exit 0
@@ -32,6 +31,7 @@ while true; do
       * ) echo "Please answer with Yes or No [y|n].";;
   esac
 done
+
 echo ""
 echo "============================================================"
 echo ""
@@ -39,20 +39,18 @@ echo "Installing necessary dependencies... (This could take a while)"
 echo ""
 echo "============================================================"
 
-apt-get install -y lsof python-pip git wget omxplayer libnss-mdns fbi
+apt-get install -y lsof python-pip git wget vlc libnss-mdns fbi
 echo "============================================================"
 
-if [ "$?" = "1" ]
-then
-  echo "An unexpected error occured during apt-get!"
+if [ "$?" = "1" ]; then
+  echo "An unexpected error occurred during apt-get!"
   exit 0
 fi
 
 pip install youtube-dl bottle livestreamer
 
-if [ "$?" = "1" ]
-then
-  echo "An unexpected error occured during pip install!"
+if [ "$?" = "1" ]; then
+  echo "An unexpected error occurred during pip install!"
   exit 0
 fi
 
@@ -73,19 +71,19 @@ echo "Adding project to startup sequence and custom options"
 echo ""
 echo "============================================================"
 
-#Gives right to all user to get out of screen standby
+# Gives right to all users to get out of screen standby
 chmod 666 /dev/tty1
 
-#Add to rc.local startup
+# Add to rc.local startup
 sed -i '$ d' /etc/rc.local
 echo "su - $USER -c \"cd ./RaspberryCast/ && ./RaspberryCast.sh start\"" >> /etc/rc.local
 echo "exit 0" >> /etc/rc.local
 
-#Adding right to current pi user to shutdown
+# Adding the right to the current pi user to shutdown
 chmod +s /sbin/shutdown
 
-#Adding right to sudo fbi without password
-echo "$USER ALL = (root) NOPASSWD: /usr/bin/fbi" >> /etc/sudoers
+# Adding right to sudo for VLC without password
+echo "$USER ALL = (root) NOPASSWD: /usr/bin/vlc" >> /etc/sudoers
 
 rm setup.sh
 
@@ -97,7 +95,7 @@ echo "============================================================"
 
 sleep 2
 
-#Reboot to ensure cleaness of Pi memory and displaying of log
+# Reboot to ensure cleanliness of Pi memory and displaying of logs
 reboot
 
 exit 0
