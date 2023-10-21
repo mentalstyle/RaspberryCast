@@ -39,7 +39,7 @@ echo "Installing necessary dependencies... (This could take a while)"
 echo ""
 echo "============================================================"
 
-apt-get install -y lsof python-pip git wget vlc libnss-mdns fbi
+apt-get install -y lsof python3-pip git wget vlc libnss-mdns fbi
 echo "============================================================"
 
 if [ "$?" = "1" ]; then
@@ -47,7 +47,7 @@ if [ "$?" = "1" ]; then
   exit 0
 fi
 
-pip install youtube-dl bottle livestreamer
+pip3 install youtube-dl bottle livestreamer
 
 if [ "$?" = "1" ]; then
   echo "An unexpected error occurred during pip install!"
